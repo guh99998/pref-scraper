@@ -141,3 +141,5 @@ print(f"""
     Lote: {lote_value}
     Situação: {situacao_lote}
 """)
+
+driver.quit()
