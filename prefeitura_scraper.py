@@ -88,6 +88,10 @@ class PrefeituraScraper:
                 self.numero_lote = self.driver.find_element(locate_with(By.TAG_NAME, "td").below(lote_title)).text
                 break;
     
+    def realizar_consulta_debitos_de_arquivo(self, list_inscricoes):
+        for inscricao in list_inscricoes:
+            self.realizar_consulta_debitos_titularidade(inscricao)
+
     def realizar_consulta_debitos_titularidade(self, inscricao):
         '''
         Realiza a função de consulta de débitos e titularidade do imóvel, verificando se o lote possui débitos vencidos ou a vencer.
@@ -98,10 +102,10 @@ class PrefeituraScraper:
         self.verificar_debitos_vencidos()
         self.obter_informacoes_gerais()
 
-        print(f"""
+        print(f"""\n
         --- RESULTADOS DA BUSCA ---
         Proprietário: {self.nome_proprietario}
         Quadra: {self.quadra_lote}
         Lote: {self.numero_lote}
-        Situação do lote: {"Débitos em aberto" if self.lote_com_debitos else "Sem débitos em aberto"}
+        Situação do lote: {"Débitos em aberto" if self.lote_com_debitos else "Sem débitos em aberto"}\n
         """)
