@@ -1,46 +1,23 @@
-import datetime
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from prefeitura_scraper import PrefeituraScraper
-from leitura_arquivos import LeituraArquivos
 
-# Data
-data_atual = datetime.date.today()
+from pages.home_page import HomePage
 
-# Definindo URL de Busca
-url = "https://nfe.sgpcloud.net:9175/servicosweb/home.jsf"
+inscricao_com_debito_vencido = "0001030890194001"
+inscricao_sem_debito_vencido = "0001030830062001"
+inscricao_sem_debito = "0001030830032001"
 
-# Arquivo excel com muitas inscrições
-file_xlsx = "./files/file.xlsx"
+browser_options = Options()
+browser_options.add_experimental_option("detach", True)
+browser_options.page_load_strategy = 'eager'
+driver = webdriver.Chrome(options=browser_options)
 
-leitura_arquivo = LeituraArquivos(file_xlsx)
-#leitura_arquivo.ler_arquivo_excel()
+home_page = HomePage(driver)
+home_page.acessar_pagina_inicial_imovel()
+home_page.preencher_campo_inscricao(inscricao_com_debito_vencido)
 
-# RESULTADO ESPERADO
-# Proprietário: PORTUCALE EMPREENDIMENTOS IMOB
-# Quadra: 00B
-# Lote: 0001
-# Situação do Lote: Débitos em aberto
-inscricao_b01 = "0001030830032001"
+inscricao_imovel = home_page.clicar_botao_validar()
 
+debitos_imovel = inscricao_imovel.acessar_debitos_em_aberto()
 
-# RESULTADO ESPERADO
-# Proprietário: PORTUCALE EMPREENDIMENTOS IMOB
-# Quadra: 00C
-# Lote: 0006
-# Situação do Lote: Sem débitos em aberto
-inscricao_c06 = "0001030840150001"
-
-# Configurando as Options do Selenium para que o navegador não feche sozinho e espera a página carregar
-chrome_options = Options()
-#chrome_options.add_experimental_option("detach", True)
-#chrome_options.page_load_strategy = 'eager'
-chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(options=chrome_options)
-
-prefeitura_scraper = PrefeituraScraper(url, driver, data_atual)
-
-prefeitura_scraper.realizar_consulta_debitos_de_arquivo(leitura_arquivo.ler_arquivo_excel())
-
-driver.quit()
+print(debitos_imovel.existe_debitos_em_aberto())
