@@ -18,9 +18,15 @@ XPATH_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO = "/html/body/div[9]/div/div[3]/for
 
 XPATH_MENSAGEM_ENTRADA_TELA_DEBITOS = "/html/body/div[9]/div/div[3]/form/div[2]/div/div"
 
-XPATH_TABELA_DEBITOS_EM_ABERTO = "/html/body/div[9]/div/div[3]/form/div[2]/div[2]/div/div[2]"
+ID_TABELA_DEBITOS_EM_ABERTO = "formDebitos:tabViewDebitos:j_idt803"
 
-XPATH_PRIMEIRO_VENCIMENTO_TABELA_DEBITOS_EM_ABERTO = "/html/body/div[9]/div/div[3]/form/div[2]/div[2]/div/div[2]/div[2]/div[1]/table/tbody/tr[1]/td[7]"
+ID_COLUNA_VENCIMENTO_TABELA_DEBITOS_EM_ABERTO = "formDebitos:tabViewDebitos:dataTableDados:j_idt812"
+
+ID_COLUNA_VALOR_TOTAL_TABELA_DEBITOS_EM_ABERTO = "formDebitos:tabViewDebitos:dataTableDados:j_idt819"
+
+ID_ITEMS_TABELA_DE_DEBITOS = "formDebitos:tabViewDebitos:dataTableDados_data"
+
+ID_BOTAO_IMPRIMIR_TODOS_DEBITOS = "formDebitos:tabViewDebitos:j_idt868"
 
 CLASSE_COR_AZUL_SEM_DEBITOS_PAGINA_DEBITOS = "ui-state-default ui-corner-all"
 
