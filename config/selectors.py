@@ -16,7 +16,7 @@ ID_PAGINA_CERTIDAO_EXISTENCIA_IMOVEL = "formImobiliario:repeat:3:clLinkImobiliar
 
 ID_PAGINA_CERTIDAO_VALOR_VENAL_IMOVEL = "formImobiliario:repeat:4:clLinkImobiliario"
 
-XPATH_PAGINA_EMITIR_CARNE_IPTU = "formImobiliario:repeat:5:clLinkImobiliario"
+ID_PAGINA_EMITIR_CARNE_IPTU = "formImobiliario:repeat:5:clLinkImobiliario"
 
 XPATH_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO = "formImobiliario:repeat:6:clLinkImobiliario"
 
@@ -69,3 +69,9 @@ ID_DIV_VOLTAR_INICIO = "/html/body/div[9]/div/div[3]/form/div[1]/ul/li[3]/a"
 ID_BOTAO_CERTIDAO_NEGATIVA_DEBITOS = "formCertidaoNegativaDebitos:tabView:j_idt557:j_idt604"
 
 ID_BOTAO_CERTIDAO_EXISTENCIA = "formCertidaoExistencia:tabView:compCertidao:j_idt602"
+
+ID_BOTAO_CERTIDAO_VALOR_VENAL = "formCertidaoValorVenal:tabView:j_idt588:j_idt635"
+
+ID_BOTAO_CARNE_IPTU = "formCarne:tabIptu:dataTableDados:0:j_idt609:j_idt611"
+
+ID_BOTAO_LISTAGEM_IPTU = "formCarne:tabIptu:j_idt641"
