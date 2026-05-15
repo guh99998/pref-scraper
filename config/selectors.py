@@ -4,21 +4,21 @@ XPATH_BOTAO_VALIDAR_INSCRICAO = "/html/body/div[13]/div[2]/form/span[4]/div/butt
 
 XPATH_BOTAO_VALIDAR_DADOS = "/html/body/div[16]/div[2]/form/span[4]/div/button[1]"
 
-XPATH_PAGINA_INFORMACOES_COMPLETAS = "/html/body/div[9]/div/div[3]/form/div[2]/div/ul/li[1]/a"
+ID_PAGINA_INFORMACOES_COMPLETAS = "formImobiliario:repeat:0:clLinkImobiliario"
 
 ID_FORMULARIO_PAGINA_INFORMACOES_COMPLETAS = "compInformarImovel:formNumero:itCnpjCpf2"
 
 ID_PAGINA_DEBITOS = "formImobiliario:repeat:1:clLinkImobiliario"
 
-XPATH_PAGINA_CERTIDAO_NEGATIVA_DEBITOS = "/html/body/div[9]/div/div[3]/form/div[2]/div/ul/li[3]/a"
+ID_PAGINA_CERTIDAO_NEGATIVA_DEBITOS = "formImobiliario:repeat:2:clLinkImobiliario"
 
-XPATH_PAGINA_CERTIDAO_EXISTENCIA_IMOVEL = "/html/body/div[9]/div/div[3]/form/div[2]/div/ul/li[4]/a"
+ID_PAGINA_CERTIDAO_EXISTENCIA_IMOVEL = "formImobiliario:repeat:3:clLinkImobiliario"
 
-XPATH_PAGINA_CERTIDAO_VALOR_VENAL_IMOVEL = "/html/body/div[9]/div/div[3]/form/div[2]/div/ul/li[5]/a"
+ID_PAGINA_CERTIDAO_VALOR_VENAL_IMOVEL = "formImobiliario:repeat:4:clLinkImobiliario"
 
-XPATH_PAGINA_EMITIR_CARNE_IPTU = "/html/body/div[9]/div/div[3]/form/div[2]/div/ul/li[6]/a"
+XPATH_PAGINA_EMITIR_CARNE_IPTU = "formImobiliario:repeat:5:clLinkImobiliario"
 
-XPATH_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO = "/html/body/div[9]/div/div[3]/form/div[2]/div/ul/li[7]/a"
+XPATH_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO = "formImobiliario:repeat:6:clLinkImobiliario"
 
 XPATH_MENSAGEM_ENTRADA_TELA_DEBITOS = "/html/body/div[9]/div/div[3]/form/div[2]/div/div"
 
