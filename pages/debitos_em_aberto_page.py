@@ -29,13 +29,13 @@ class DebitosEmAbertoPage:
             return True
         return False
 
-    def existe_debitos_em_aberto(self):
+    def _existe_debitos_em_aberto(self):
         if self._verificar_se_existe_tabela() and self._verifica_vencimento_atrasado():
             return True
         return False
 
     def obter_primeiros_debitos(self):
-        if not self.existe_debitos_em_aberto():
+        if not self._existe_debitos_em_aberto():
             return []
 
         header_vencimento = self.driver.find_element(By.ID, ID_COLUNA_VENCIMENTO_TABELA_DEBITOS_EM_ABERTO)
@@ -57,9 +57,9 @@ class DebitosEmAbertoPage:
             if texto and valor:
                 informacoes.update({texto : valor})
 
-        self.mostrar_debitos_de_iptu_mais_antigos(informacoes)
+        self._mostrar_debitos_de_iptu_mais_antigos(informacoes)
 
-    def mostrar_debitos_de_iptu_mais_antigos(self, dicionario_informacoes):
+    def _mostrar_debitos_de_iptu_mais_antigos(self, dicionario_informacoes):
         print(f"{"Vencimento":<15} {"Valor Total":<10}")
         print("-"*25)
         for data, valor in dicionario_informacoes.items():
@@ -68,10 +68,10 @@ class DebitosEmAbertoPage:
                 f"{valor:<10}"
             )
 
-    def gerar_arquivo_pdf_debitos_em_aberto(self, pasta_destino, nome_arquivo=None):
+    def gerar_arquivo_pdf_debitos_em_aberto(self, nome_arquivo=None):
         if not self.existe_debitos_em_aberto():
             return "não existem débitos para serem impressos!"
 
         esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_TODOS_DEBITOS).click()
 
-        return esperar_download_completo(pasta_destino, nome_arquivo=nome_arquivo)
+        return esperar_download_completo(self.driver.pasta_download, nome_arquivo=nome_arquivo)
