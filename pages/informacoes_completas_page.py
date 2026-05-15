@@ -39,7 +39,7 @@ class InformacoesCompletasPage:
 
     def voltar_para_inscricao_home_page(self):
         from pages.inscricao_home_page import InscricaoHomePage
-        esperar_elemento_clicavel(self.driver, By.XPATH, ID_DIV_VOLTAR_INICIO).click()
+        esperar_elemento_clicavel(self.driver, By.XPATH, XPATH_DIV_VOLTAR_INICIO).click()
         return InscricaoHomePage(self.driver)
 
     def pdf_ficha_cadastral_lotes(self):
