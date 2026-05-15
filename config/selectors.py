@@ -67,3 +67,5 @@ XPATH_COMPLEMENTO_DADOS_GERAIS = "/html/body/div[9]/div/div[3]/form/div[2]/div[1
 ID_DIV_VOLTAR_INICIO = "/html/body/div[9]/div/div[3]/form/div[1]/ul/li[3]/a"
 
 ID_BOTAO_CERTIDAO_NEGATIVA_DEBITOS = "formCertidaoNegativaDebitos:tabView:j_idt557:j_idt604"
+
+ID_BOTAO_CERTIDAO_EXISTENCIA = "formCertidaoExistencia:tabView:compCertidao:j_idt602"
