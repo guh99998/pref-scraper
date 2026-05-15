@@ -18,4 +18,3 @@ class HomePage:
     def clicar_botao_validar(self):
         esperar_elemento_clicavel(self.driver, By.XPATH, XPATH_BOTAO_VALIDAR_INSCRICAO).click()
         return InscricaoHomePage(self.driver)
-        
