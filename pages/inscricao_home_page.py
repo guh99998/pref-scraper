@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from pages.certidao_existencia_imovel_page import CertidaoDeExistenciaPage
 from pages.certidao_negativa_debitos_page import CertidaoNegativaDebitosPage
 from pages.certidao_valor_venal_page import CertidaoValorVenalPage
+from pages.consultar_movimentacoes_extrato_page import ConsultarMovimentacoesExtratoPage
 from pages.emitir_carne_iptu_page import EmitirCarneIptuPage
 from pages.informacoes_completas_page import InformacoesCompletasPage
 from utils.waits import esperar_elemento_clicavel, esperar_elemento_visivel
@@ -10,7 +11,7 @@ from pages.debitos_em_aberto_page import DebitosEmAbertoPage
 from config.selectors import ID_PAGINA_DEBITOS, ID_PAGINA_INFORMACOES_COMPLETAS, \
     ID_FORMULARIO_PAGINA_INFORMACOES_COMPLETAS, ID_CAMPO_CABECALHO_CPF_CNPJ, XPATH_BOTAO_VALIDAR_DADOS, \
     ID_PAGINA_CERTIDAO_NEGATIVA_DEBITOS, ID_PAGINA_CERTIDAO_EXISTENCIA_IMOVEL, ID_PAGINA_CERTIDAO_VALOR_VENAL_IMOVEL, \
-    ID_PAGINA_EMITIR_CARNE_IPTU
+    ID_PAGINA_EMITIR_CARNE_IPTU, ID_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO
 
 
 class InscricaoHomePage:
@@ -45,4 +46,5 @@ class InscricaoHomePage:
         return EmitirCarneIptuPage(self.driver)
 
     def acessar_consultar_movimentacoes_extrato(self):
-        pass
+        esperar_elemento_clicavel(self.driver, By.ID, ID_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO).click()
+        return ConsultarMovimentacoesExtratoPage(self.driver)

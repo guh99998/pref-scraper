@@ -18,7 +18,7 @@ ID_PAGINA_CERTIDAO_VALOR_VENAL_IMOVEL = "formImobiliario:repeat:4:clLinkImobilia
 
 ID_PAGINA_EMITIR_CARNE_IPTU = "formImobiliario:repeat:5:clLinkImobiliario"
 
-XPATH_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO = "formImobiliario:repeat:6:clLinkImobiliario"
+ID_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO = "formImobiliario:repeat:6:clLinkImobiliario"
 
 XPATH_MENSAGEM_ENTRADA_TELA_DEBITOS = "/html/body/div[9]/div/div[3]/form/div[2]/div/div"
 
@@ -75,3 +75,5 @@ ID_BOTAO_CERTIDAO_VALOR_VENAL = "formCertidaoValorVenal:tabView:j_idt588:j_idt63
 ID_BOTAO_CARNE_IPTU = "formCarne:tabIptu:dataTableDados:0:j_idt609:j_idt611"
 
 ID_BOTAO_LISTAGEM_IPTU = "formCarne:tabIptu:j_idt641"
+
+ID_BOTAO_MOVIMENTACOES_EXTRATO = "formExtrato:j_idt362:j_idt617"
