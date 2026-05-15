@@ -8,7 +8,7 @@ XPATH_PAGINA_INFORMACOES_COMPLETAS = "/html/body/div[9]/div/div[3]/form/div[2]/d
 
 ID_FORMULARIO_PAGINA_INFORMACOES_COMPLETAS = "compInformarImovel:formNumero:itCnpjCpf2"
 
-XPATH_PAGINA_DEBITOS = "/html/body/div[9]/div/div[3]/form/div[2]/div/ul/li[2]/a"
+ID_PAGINA_DEBITOS = "formImobiliario:repeat:1:clLinkImobiliario"
 
 XPATH_PAGINA_CERTIDAO_NEGATIVA_DEBITOS = "/html/body/div[9]/div/div[3]/form/div[2]/div/ul/li[3]/a"
 
@@ -63,3 +63,5 @@ XPATH_QUADRA_DADOS_GERAIS = "/html/body/div[9]/div/div[3]/form/div[2]/div[1]/div
 XPATH_LOTE_DADOS_GERAIS = "/html/body/div[9]/div/div[3]/form/div[2]/div[1]/div/div[1]/table/tbody/tr[16]/td[4]"
 
 XPATH_COMPLEMENTO_DADOS_GERAIS = "/html/body/div[9]/div/div[3]/form/div[2]/div[1]/div/div[1]/table/tbody/tr[10]/td[3]"
+
+ID_DIV_VOLTAR_INICIO = "/html/body/div[9]/div/div[3]/form/div[1]/ul/li[3]/a"
