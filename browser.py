@@ -17,7 +17,9 @@ class Browser:
             "plugins.always_open_pdf_externally": True
         }
         browser_options.add_experimental_option("prefs", prefs)
-        return webdriver.Chrome(options=browser_options)
+        driver = webdriver.Chrome(options=browser_options)
+        driver.pasta_download = pasta_download
+        return driver
 
     @staticmethod
     def criar_driver_segundo_plano(pasta_download):
@@ -38,4 +40,5 @@ class Browser:
             "behavior": "allow",
             "downloadPath": pasta_download
         })
+        driver.pasta_download = pasta_download
         return driver
