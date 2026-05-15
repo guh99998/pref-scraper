@@ -68,10 +68,10 @@ class DebitosEmAbertoPage:
                 f"{valor:<10}"
             )
 
-    def gerar_arquivo_pdf_debitos_em_aberto(self, pasta_destino):
+    def gerar_arquivo_pdf_debitos_em_aberto(self, pasta_destino, nome_arquivo=None):
         if not self.existe_debitos_em_aberto():
             return "não existem débitos para serem impressos!"
 
         esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_TODOS_DEBITOS).click()
 
-        return esperar_download_completo(pasta_destino)
+        return esperar_download_completo(pasta_destino, nome_arquivo=nome_arquivo)
