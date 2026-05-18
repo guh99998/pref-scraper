@@ -65,6 +65,13 @@ def obter_informacoes(body: BuscarImovelRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/imovel/pdf/listagem-iptu", response_model=PDFResponse)
+def gerar_listagem_iptu():
+    try:
+        return {"caminho_arquivo": scraper.gerar_pdf_listagem_iptu()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/imovel/pdf/download")
 def download_pdf(caminho: str):
     if not os.path.exists(caminho):

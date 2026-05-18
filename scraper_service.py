@@ -49,7 +49,6 @@ class ScraperService:
             home.preencher_campo_inscricao(inscricao)
             inscricao_page = home.clicar_botao_validar()
             informacoes = inscricao_page.acessar_informacoes_completas()
-            informacoes.obter_dados_completos()
             self._inscricao_page = informacoes.voltar_para_inscricao_home_page()
             return self._driver.dados_imovel
 
