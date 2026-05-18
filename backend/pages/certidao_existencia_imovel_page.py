@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
-from config.selectors import ID_BOTAO_CERTIDAO_EXISTENCIA
-from utils.waits import esperar_elemento_visivel, esperar_download_completo
+from backend.config.selectors import ID_BOTAO_CERTIDAO_EXISTENCIA
+from backend.utils.waits import esperar_elemento_visivel, esperar_download_completo
 
 
 class CertidaoDeExistenciaPage:

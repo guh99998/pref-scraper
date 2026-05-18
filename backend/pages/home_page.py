@@ -1,7 +1,7 @@
-from config.selectors import LINK_TEXT_IMOBILIARIO, XPATH_BOTAO_VALIDAR_INSCRICAO, XPATH_CAMPO_INSCRICAO
+from backend.config.selectors import LINK_TEXT_IMOBILIARIO, XPATH_BOTAO_VALIDAR_INSCRICAO, XPATH_CAMPO_INSCRICAO
 from selenium.webdriver.common.by import By
-from pages.inscricao_home_page import InscricaoHomePage
-from utils.waits import esperar_elemento_clicavel
+from backend.pages.inscricao_home_page import InscricaoHomePage
+from backend.utils.waits import esperar_elemento_clicavel
 
 
 class HomePage:

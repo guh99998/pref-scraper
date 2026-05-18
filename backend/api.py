@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from schemas import BuscarImovelRequest, DadosImovelResponse, PDFResponse, InformacoesImovelResponse
+from backend.schemas import BuscarImovelRequest, DadosImovelResponse, PDFResponse, InformacoesImovelResponse
 from scraper_service import scraper
 
 

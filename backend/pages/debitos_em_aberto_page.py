@@ -1,9 +1,9 @@
-from config.selectors import ID_TABELA_DEBITOS_EM_ABERTO, ID_COLUNA_VENCIMENTO_TABELA_DEBITOS_EM_ABERTO, \
+from backend.config.selectors import ID_TABELA_DEBITOS_EM_ABERTO, ID_COLUNA_VENCIMENTO_TABELA_DEBITOS_EM_ABERTO, \
     XPATH_MENSAGEM_ENTRADA_TELA_DEBITOS, ID_ITEMS_TABELA_DE_DEBITOS, ID_COLUNA_VALOR_TOTAL_TABELA_DEBITOS_EM_ABERTO, \
     ID_BOTAO_IMPRIMIR_TODOS_DEBITOS
 from selenium.webdriver.support.relative_locator import locate_with
 from selenium.webdriver.common.by import By
-from utils.waits import esperar_elemento_visivel, esperar_download_completo
+from backend.utils.waits import esperar_elemento_visivel, esperar_download_completo
 import datetime
 
 class DebitosEmAbertoPage:
