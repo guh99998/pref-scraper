@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from config.selectors import XPATH_NOME_PROPRIETARIO_TELA_DADOS, \
     XPATH_DOC_PROPRIETARIO_TELA_DADOS, XPATH_BAIRRO_DADOS_GERAIS, XPATH_QUADRA_DADOS_GERAIS, XPATH_LOTE_DADOS_GERAIS, \
     XPATH_LOGRADOURO_DADOS_GERAIS, XPATH_NUMERO_DADOS_GERAIS, XPATH_COMPLEMENTO_DADOS_GERAIS, \
-    ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL, ID_DIV_VOLTAR_INICIO
+    ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL, XPATH_DIV_VOLTAR_INICIO
 from utils.waits import esperar_elemento_visivel, esperar_elemento_clicavel, esperar_download_completo
 
 class InformacoesCompletasPage:
@@ -17,9 +17,9 @@ class InformacoesCompletasPage:
         self.logradouro = ""
         self.numero = ""
         self.complemento = ""
-        self._obter_dados_completos()
+        self.obter_dados_completos()
 
-    def _obter_dados_completos(self):
+    def obter_dados_completos(self):
         self.nome_proprietario = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_NOME_PROPRIETARIO_TELA_DADOS).text
         self.doc_proprietario = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_DOC_PROPRIETARIO_TELA_DADOS).text
         self.nome_bairro = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_BAIRRO_DADOS_GERAIS).text
@@ -35,6 +35,8 @@ class InformacoesCompletasPage:
             "logradouro": self.logradouro,
             "numero": self.numero.lstrip("0"),
             "complemento": self.complemento,
+            "nome_proprietario": self.nome_proprietario,
+            "doc_proprietario": self.doc_proprietario
         }
 
     def voltar_para_inscricao_home_page(self):

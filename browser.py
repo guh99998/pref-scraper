@@ -1,3 +1,4 @@
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
@@ -7,6 +8,7 @@ class Browser:
 
     @staticmethod
     def criar_driver_primeiro_plano(pasta_download):
+        pasta_download = os.path.normpath(pasta_download)
         browser_options = Options()
         browser_options.add_experimental_option("detach", True)
         browser_options.page_load_strategy = 'eager'
@@ -23,6 +25,7 @@ class Browser:
 
     @staticmethod
     def criar_driver_segundo_plano(pasta_download):
+        pasta_download = os.path.normpath(pasta_download)
         browser_options = Options()
         browser_options.add_argument("--headless=new")
         browser_options.add_argument("--window-size=1920,1080")
