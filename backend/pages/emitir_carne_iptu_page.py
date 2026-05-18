@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
-from backend.config.selectors import ID_BOTAO_LISTAGEM_IPTU, ID_BOTAO_CARNE_IPTU
-from backend.utils.waits import esperar_elemento_visivel, esperar_download_completo
+from config.selectors import ID_BOTAO_LISTAGEM_IPTU, ID_BOTAO_CARNE_IPTU
+from utils.waits import esperar_elemento_visivel, esperar_download_completo
 
 
 class EmitirCarneIptuPage:

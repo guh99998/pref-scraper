@@ -1,10 +1,10 @@
 from selenium.webdriver.common.by import By
 
-from backend.config.selectors import XPATH_NOME_PROPRIETARIO_TELA_DADOS, \
+from config.selectors import XPATH_NOME_PROPRIETARIO_TELA_DADOS, \
     XPATH_DOC_PROPRIETARIO_TELA_DADOS, XPATH_BAIRRO_DADOS_GERAIS, XPATH_QUADRA_DADOS_GERAIS, XPATH_LOTE_DADOS_GERAIS, \
     XPATH_LOGRADOURO_DADOS_GERAIS, XPATH_NUMERO_DADOS_GERAIS, XPATH_COMPLEMENTO_DADOS_GERAIS, \
     ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL, XPATH_DIV_VOLTAR_INICIO
-from backend.utils.waits import esperar_elemento_visivel, esperar_elemento_clicavel, esperar_download_completo
+from utils.waits import esperar_elemento_visivel, esperar_elemento_clicavel, esperar_download_completo
 
 class InformacoesCompletasPage:
     def __init__(self, driver):
@@ -40,7 +40,7 @@ class InformacoesCompletasPage:
         }
 
     def voltar_para_inscricao_home_page(self):
-        from backend.pages.inscricao_home_page import InscricaoHomePage
+        from pages.inscricao_home_page import InscricaoHomePage
         esperar_elemento_clicavel(self.driver, By.XPATH, XPATH_DIV_VOLTAR_INICIO).click()
         return InscricaoHomePage(self.driver)
 
