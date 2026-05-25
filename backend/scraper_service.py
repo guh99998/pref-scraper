@@ -10,7 +10,7 @@ class ScraperService:
         self._inscricao = None
         self._pasta_download = None
 
-    def _garantir_driver(self, pasta_download: str):
+    def _garantir_driver(self, pasta_download: str, headless: bool = True):
         if self._driver is not None:
             try:
                 _ = self._driver.title
@@ -19,7 +19,10 @@ class ScraperService:
                 self._inscricao_page = None
 
         if self._driver is None:
-            self._driver = Browser.criar_driver_segundo_plano(pasta_download)
+            if headless:
+                self._driver = Browser.criar_driver_segundo_plano(pasta_download)
+            else:
+                self._driver = Browser.criar_driver_primeiro_plano(pasta_download)
 
     def _voltar_para_inscricao(self):
         from pages.inscricao_home_page import InscricaoHomePage
@@ -39,9 +42,9 @@ class ScraperService:
                 informacoes = inscricao_page.acessar_informacoes_completas()
                 self._inscricao_page = informacoes.voltar_para_inscricao_home_page()
 
-    def buscar_imovel(self, inscricao: str, pasta_download: str) -> dict:
+    def buscar_imovel(self, inscricao: str, pasta_download: str, headless: bool = True) -> dict:
         with self._lock:
-            self._garantir_driver(pasta_download)
+            self._garantir_driver(pasta_download, headless)
             self._inscricao = inscricao
             self._pasta_download = pasta_download
             home = HomePage(self._driver)
@@ -111,9 +114,9 @@ class ScraperService:
             self._voltar_para_inscricao()
             return resultado
 
-    def obter_informacoes(self, inscricao: str, pasta_download: str) -> dict:
+    def obter_informacoes(self, inscricao: str, pasta_download: str, headless: bool = True) -> dict:
         with self._lock:
-            self._garantir_driver(pasta_download)
+            self._garantir_driver(pasta_download, headless)
             self._inscricao = inscricao
             self._pasta_download = pasta_download
             home = HomePage(self._driver)
