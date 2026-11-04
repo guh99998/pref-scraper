@@ -2,6 +2,11 @@ XPATH_CAMPO_INSCRICAO = "/html/body/div[13]/div[2]/form/table/tbody/tr[1]/td[2]/
 
 XPATH_BOTAO_VALIDAR_INSCRICAO = "/html/body/div[13]/div[2]/form/span[4]/div/button[1]"
 
+XPATH_ERRO_VALIDACAO_INSCRICAO = (
+    "//div[@id='compInformarImovel:formNumero:mensagens']"
+    "//span[contains(@class, 'ui-messages-error-detail')]"
+)
+
 ID_BOTAO_VALIDAR_DADOS = "compInformarImovel:formNumero:btnValidar"
 
 XPATH_PAGINA_INFORMACOES_COMPLETAS = "//a[starts-with(@id, 'formImobiliario:repeat:0:')]"
@@ -47,7 +52,9 @@ LINK_TEXT_DEBITOS = "Débitos"
 
 LINK_TEXT_DADOS_GERAIS = "Dados gerais"
 
-XPATH_DIV_VOLTAR_INICIO = "//div[contains(@class, 'ui-breadcrumb')]//a[contains(@href, 'formImobiliario.jsf')]"
+XPATH_DIV_VOLTAR_INICIO = (
+    "//div[contains(@class, 'ui-breadcrumb')]//a[contains(@href, 'formImobiliario.jsf')]"
+)
 
 ID_BOTAO_CERTIDAO_NEGATIVA_DEBITOS = "formCertidaoNegativaDebitos:tabView:j_idt557:j_idt604"
 

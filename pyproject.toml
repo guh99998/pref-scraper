@@ -36,3 +36,6 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"pref_scraper/cli.py" = ["B008"]  # typer.Option em defaults é o padrão do Typer

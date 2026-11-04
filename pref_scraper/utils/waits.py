@@ -1,11 +1,12 @@
 import time
 from pathlib import Path
 
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from pref_scraper.arquivos import caminho_livre
+
 
 def esperar_elemento_visivel(driver, by, selector, timeout=10):
     return WebDriverWait(driver, timeout).until(

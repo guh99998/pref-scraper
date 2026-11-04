@@ -94,3 +94,18 @@ def test_fechar_e_idempotente():
     s.fechar()
     s.fechar()
     assert driver.encerrado
+
+
+def test_gerar_reabre_a_inscricao_se_a_volta_anterior_falhou():
+    s = ServicoSemPortal(DriverFalso())
+    s._inscricao = "0001"
+    s._inscricao_page = None
+    reabertas = []
+
+    def reabrir():
+        reabertas.append(1)
+        s._inscricao_page = object()
+
+    s._abrir_inscricao = reabrir
+    assert s._gerar(lambda page: "p", lambda p: "ok") == "ok"
+    assert reabertas == [1]

@@ -12,6 +12,10 @@ from pref_scraper.pages.inscricao_home_page import InscricaoHomePage
 from pref_scraper.utils.waits import esperar_elemento_clicavel
 
 
+class DocumentoIndisponivel(RuntimeError):
+    """O portal não oferece o documento para este imóvel (ex.: carnê sem parcelas em aberto)."""
+
+
 class ScraperService:
     """Orquestra o fluxo no portal. Use como context manager para o Chrome ser sempre fechado.
 
@@ -34,7 +38,10 @@ class ScraperService:
     @property
     def driver(self):
         if self._driver is None:
-            criar = Browser.criar_driver_segundo_plano if self._headless else Browser.criar_driver_primeiro_plano
+            if self._headless:
+                criar = Browser.criar_driver_segundo_plano
+            else:
+                criar = Browser.criar_driver_primeiro_plano
             self._driver = criar(self._pasta_download)
         return self._driver
 
@@ -58,7 +65,10 @@ class ScraperService:
         self._inscricao_page = informacoes.voltar_para_inscricao_home_page()
 
     def _voltar_para_inscricao(self):
-        """Volta ao menu do imóvel; se falhar, tenta reabrir. Nunca levanta: não pode mascarar o erro original."""
+        """Volta ao menu do imóvel; se falhar, tenta reabrir.
+
+        Nunca levanta, para não mascarar o erro original de quem chamou.
+        """
         try:
             esperar_elemento_clicavel(self.driver, By.XPATH, XPATH_DIV_VOLTAR_INICIO).click()
             self._inscricao_page = InscricaoHomePage(self.driver)
@@ -72,7 +82,9 @@ class ScraperService:
     def _gerar(self, acessar, gerar):
         """Acessa uma tela do imóvel e gera algo nela, voltando ao menu mesmo em caso de falha."""
         if self._inscricao_page is None:
-            raise RuntimeError("Busque um imóvel antes de gerar documentos")
+            if self._inscricao is None:
+                raise RuntimeError("Busque um imóvel antes de gerar documentos")
+            self._abrir_inscricao()  # a volta anterior falhou: reabre em vez de falhar em cascata
         try:
             return gerar(acessar(self._inscricao_page))
         finally:
@@ -137,7 +149,7 @@ class ScraperService:
             try:
                 return page.gerar_carne_iptu()
             except TimeoutException as e:
-                raise RuntimeError(
+                raise DocumentoIndisponivel(
                     "Nenhum carnê de IPTU disponível — IPTU já quitado ou sem parcelas em aberto"
                 ) from e
 
