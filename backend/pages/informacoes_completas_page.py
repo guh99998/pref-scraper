@@ -1,9 +1,7 @@
 from selenium.webdriver.common.by import By
 
-from config.selectors import XPATH_NOME_PROPRIETARIO_TELA_DADOS, \
-    XPATH_DOC_PROPRIETARIO_TELA_DADOS, XPATH_BAIRRO_DADOS_GERAIS, XPATH_QUADRA_DADOS_GERAIS, XPATH_LOTE_DADOS_GERAIS, \
-    XPATH_LOGRADOURO_DADOS_GERAIS, XPATH_NUMERO_DADOS_GERAIS, XPATH_COMPLEMENTO_DADOS_GERAIS, \
-    ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL, XPATH_DIV_VOLTAR_INICIO
+from config.selectors import ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL, XPATH_DIV_VOLTAR_INICIO
+from utils.campos import valor_do_campo
 from utils.waits import esperar_elemento_visivel, esperar_elemento_clicavel, esperar_download_completo
 
 class InformacoesCompletasPage:
@@ -20,14 +18,14 @@ class InformacoesCompletasPage:
         self.obter_dados_completos()
 
     def obter_dados_completos(self):
-        self.nome_proprietario = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_NOME_PROPRIETARIO_TELA_DADOS).text
-        self.doc_proprietario = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_DOC_PROPRIETARIO_TELA_DADOS).text
-        self.nome_bairro = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_BAIRRO_DADOS_GERAIS).text
-        self.quadra = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_QUADRA_DADOS_GERAIS).text
-        self.lote = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_LOTE_DADOS_GERAIS).text
-        self.logradouro = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_LOGRADOURO_DADOS_GERAIS).text
-        self.numero = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_NUMERO_DADOS_GERAIS).text
-        self.complemento = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_COMPLEMENTO_DADOS_GERAIS).text
+        self.nome_proprietario = valor_do_campo(self.driver, "Proprietário")
+        self.doc_proprietario = valor_do_campo(self.driver, "CPF")
+        self.nome_bairro = valor_do_campo(self.driver, "Bairro")
+        self.quadra = valor_do_campo(self.driver, "Quadra")
+        self.lote = valor_do_campo(self.driver, "Lote")
+        self.logradouro = valor_do_campo(self.driver, "Logradouro")
+        self.numero = valor_do_campo(self.driver, "Número")
+        self.complemento = valor_do_campo(self.driver, "Complemento")
         self.driver.dados_imovel = {
             "bairro": self.nome_bairro,
             "quadra": self.quadra.lstrip("0"),
