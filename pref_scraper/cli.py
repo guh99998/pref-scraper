@@ -127,7 +127,7 @@ def info(inscricao: str = OPCAO_INSCRICAO, visivel: bool = OPCAO_VISIVEL):
     """Consulta informações e situação de débitos de um imóvel."""
     _iniciar("info", [("Inscrição", inscricao)])
     contagem = Contagem()
-    with tempfile.TemporaryDirectory() as pasta, criar_servico(pasta, visivel) as servico:
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as pasta, criar_servico(pasta, visivel) as servico:
         try:
             informacoes = servico.obter_informacoes(inscricao)
         except Exception as e:
@@ -198,7 +198,7 @@ def lote(
     _iniciar("lote", [("Inscrições", str(len(inscricoes))), ("Saída", str(pasta.resolve()))])
     contagem = Contagem()
     linhas = []
-    with tempfile.TemporaryDirectory() as tmp, criar_servico(tmp, visivel) as servico:
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp, criar_servico(tmp, visivel) as servico:
         for inscricao in inscricoes:
             with ui.erro.status(f"Consultando {inscricao}..."):
                 try:
