@@ -16,8 +16,8 @@ def _xlsx(tmp_path, cabecalho, linhas, nome="entrada.xlsx"):
 
 
 def test_preserva_zeros_a_esquerda(tmp_path):
-    arq = _xlsx(tmp_path, ["Numero"], [["0001030830032001"], ["000200"]])
-    assert ler_inscricoes(arq, "Numero") == ["0001030830032001", "000200"]
+    arq = _xlsx(tmp_path, ["Numero"], [["0000123456789012"], ["000200"]])
+    assert ler_inscricoes(arq, "Numero") == ["0000123456789012", "000200"]
 
 
 def test_celula_numerica_nao_vira_float(tmp_path):

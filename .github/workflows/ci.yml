@@ -15,4 +15,4 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: ruff check .
       - run: pytest
-      - run: pip-audit
+      - run: pip-audit --skip-editable

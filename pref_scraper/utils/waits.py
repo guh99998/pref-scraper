@@ -31,8 +31,10 @@ def baixar_arquivo(acao, pasta, nome, extensao=".pdf", timeout=30, intervalo=0.5
 
     fim = time.monotonic() + timeout
     while time.monotonic() < fim:
-        novos = [f for f in pasta.glob(f"*{extensao}") if f.name not in antes]
-        if novos and not list(pasta.glob("*.crdownload")):
+        # O Chrome só dá o nome final ao arquivo quando o download termina (o parcial é *.crdownload),
+        # então não olhamos para *.crdownload: o portal deixa um 'downloads.htm.crdownload' recorrente.
+        novos = [f for f in pasta.glob(f"*{extensao}") if f.name not in antes and f.stat().st_size > 0]
+        if novos:
             destino = caminho_livre(pasta, nome)
             novos[0].rename(destino)
             return destino

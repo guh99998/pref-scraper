@@ -38,9 +38,9 @@ XPATH_CABECALHO_VENCIMENTO = (
     "//th[.//span[@class='ui-column-title'][normalize-space()='Venc']]"
 )
 
-ID_BOTAO_IMPRIMIR_TODOS_DEBITOS = "formDebitos:tabViewDebitos:j_idt868"
+XPATH_BOTAO_IMPRIMIR_TODOS_DEBITOS = "//form[@id='formDebitos']//button[.//span[normalize-space()='Imprimir Todos']]"
 
-ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL = "formInformacoesCompletas:j_idt649"
+XPATH_BOTAO_IMPRIMIR_FICHA_CADASTRAL = "//form[@id='formInformacoesCompletas']//button[.//span[normalize-space()='Ficha Cadastral']]"
 
 ID_CAMPO_CABECALHO_PROPRIETARIO = "formCabecalho:textProprietarioNome"
 
@@ -56,14 +56,14 @@ XPATH_DIV_VOLTAR_INICIO = (
     "//div[contains(@class, 'ui-breadcrumb')]//a[contains(@href, 'formImobiliario.jsf')]"
 )
 
-ID_BOTAO_CERTIDAO_NEGATIVA_DEBITOS = "formCertidaoNegativaDebitos:tabView:j_idt557:j_idt604"
+XPATH_BOTAO_CERTIDAO_NEGATIVA_DEBITOS = "//form[@id='formCertidaoNegativaDebitos']//button[.//span[normalize-space()='Imprimir Certidão']]"
 
-ID_BOTAO_CERTIDAO_EXISTENCIA = "formCertidaoExistencia:tabView:compCertidao:j_idt602"
+XPATH_BOTAO_CERTIDAO_EXISTENCIA = "//form[@id='formCertidaoExistencia']//button[.//span[normalize-space()='Imprimir Certidão']]"
 
-ID_BOTAO_CERTIDAO_VALOR_VENAL = "formCertidaoValorVenal:tabView:j_idt588:j_idt635"
+XPATH_BOTAO_CERTIDAO_VALOR_VENAL = "//form[@id='formCertidaoValorVenal']//button[.//span[normalize-space()='Imprimir Certidão']]"
 
-ID_BOTAO_CARNE_IPTU = "formCarne:tabIptu:dataTableDados:0:j_idt609:j_idt611"
+XPATH_BOTAO_CARNE_IPTU = "//form[@id='formCarne']//button[.//span[normalize-space()='Imprimir Carnê']]"
 
-ID_BOTAO_LISTAGEM_IPTU = "formCarne:tabIptu:j_idt641"
+XPATH_BOTAO_LISTAGEM_IPTU = "//form[@id='formCarne']//button[.//span[normalize-space()='Imprimir Listagem']]"
 
-ID_BOTAO_MOVIMENTACOES_EXTRATO = "formExtrato:j_idt362:j_idt617"
+XPATH_BOTAO_MOVIMENTACOES_EXTRATO = "//form[@id='formExtrato']//button[.//span[normalize-space()='Imprimir']]"

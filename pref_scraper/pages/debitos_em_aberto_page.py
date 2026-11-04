@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from pref_scraper.arquivos import nome_documento
 from pref_scraper.config.selectors import (
-    ID_BOTAO_IMPRIMIR_TODOS_DEBITOS,
+    XPATH_BOTAO_IMPRIMIR_TODOS_DEBITOS,
     XPATH_CABECALHO_VENCIMENTO,
     XPATH_LINHAS_DEBITOS,
     XPATH_MENSAGEM_SEM_DEBITOS,
@@ -64,6 +64,6 @@ class DebitosEmAbertoPage:
     def gerar_arquivo_pdf_debitos_em_aberto(self):
         if self.situacao() is SituacaoDebitos.SEM_DEBITOS:
             return None
-        botao = esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_TODOS_DEBITOS)
+        botao = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_BOTAO_IMPRIMIR_TODOS_DEBITOS)
         nome = nome_documento(self.driver.dados_imovel, "debitos")
         return baixar_arquivo(botao.click, self.driver.pasta_download, nome)

@@ -39,3 +39,4 @@ select = ["E", "F", "I", "B", "UP"]
 
 [tool.ruff.lint.per-file-ignores]
 "pref_scraper/cli.py" = ["B008"]  # typer.Option em defaults é o padrão do Typer
+"pref_scraper/config/selectors.py" = ["E501"]  # XPaths longos

@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-from pref_scraper.config.selectors import ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL, XPATH_DIV_VOLTAR_INICIO
+from pref_scraper.config.selectors import XPATH_BOTAO_IMPRIMIR_FICHA_CADASTRAL, XPATH_DIV_VOLTAR_INICIO
 from pref_scraper.models import DadosImovel
 from pref_scraper.utils.campos import valor_do_campo
 from pref_scraper.utils.waits import baixar_arquivo, esperar_elemento_clicavel, esperar_elemento_visivel
@@ -33,12 +33,12 @@ class InformacoesCompletasPage:
 
     def pdf_ficha_cadastral_lotes(self):
         d = self.dados
-        botao = esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL)
+        botao = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_BOTAO_IMPRIMIR_FICHA_CADASTRAL)
         nome = f"Ficha Cadastral - {d.bairro} ({d.quadra}_{d.lote}).pdf"
         return baixar_arquivo(botao.click, self.driver.pasta_download, nome)
 
     def pdf_ficha_cadastral_residencial(self):
         d = self.dados
-        botao = esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL)
+        botao = esperar_elemento_visivel(self.driver, By.XPATH, XPATH_BOTAO_IMPRIMIR_FICHA_CADASTRAL)
         nome = f"Ficha Cadastral - {d.bairro} ({d.logradouro}_{d.numero}) {d.complemento}.pdf"
         return baixar_arquivo(botao.click, self.driver.pasta_download, nome)

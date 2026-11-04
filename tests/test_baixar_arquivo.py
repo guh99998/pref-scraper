@@ -60,3 +60,22 @@ def test_nunca_sobrescreve_arquivo_existente_com_o_mesmo_nome(tmp_path):
 def test_timeout_quando_nada_e_baixado(tmp_path):
     with pytest.raises(TimeoutException):
         baixar_arquivo(lambda: None, tmp_path, "final.pdf", timeout=0.3, intervalo=0.05)
+
+
+def test_crdownload_alheio_nao_bloqueia_um_pdf_ja_concluido(tmp_path):
+    # o portal/Chrome deixa um 'downloads.htm.crdownload' recorrente na pasta; ele nada tem a ver com o PDF
+    (tmp_path / "downloads.htm.crdownload").write_bytes(b"...")
+
+    def acao():
+        (tmp_path / "report.pdf").write_bytes(b"%PDF")
+
+    resultado = baixar_arquivo(acao, tmp_path, "final.pdf", timeout=1, intervalo=0.05)
+    assert resultado.read_bytes() == b"%PDF"
+
+
+def test_nao_pega_pdf_ainda_em_download(tmp_path):
+    def acao():
+        (tmp_path / "report.pdf.crdownload").write_bytes(b"parcial")
+
+    with pytest.raises(TimeoutException):
+        baixar_arquivo(acao, tmp_path, "final.pdf", timeout=0.3, intervalo=0.05)
