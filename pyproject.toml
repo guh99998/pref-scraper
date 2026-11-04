@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pref-scraper"
+version = "0.2.0"
+description = "CLI para consultar o portal imobiliário de Monte Sião-MG (SGP Cloud)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "selenium>=4.43",
+    "typer>=0.27",
+    "rich>=15",
+    "pandas>=3",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "pip-audit>=2.7"]
+
+[project.scripts]
+pref-scraper = "pref_scraper.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["pref_scraper*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["navegador: testes que abrem o Chrome (rodar com -m navegador)"]
+addopts = "-m 'not navegador'"
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
