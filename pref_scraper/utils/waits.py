@@ -1,9 +1,11 @@
-import glob
-import os
 import time
+from pathlib import Path
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+
+from pref_scraper.arquivos import caminho_livre
 
 def esperar_elemento_visivel(driver, by, selector, timeout=10):
     return WebDriverWait(driver, timeout).until(
@@ -15,36 +17,24 @@ def esperar_elemento_clicavel(driver, by, selector, timeout=10):
         EC.element_to_be_clickable((by, selector))
     )
 
-def esperar_download_completo(pasta, extensao=".pdf", timeout=30, nome_arquivo=None):
-    # Registra nome E tempo de modificação dos arquivos existentes
-    arquivos_antes = {
-        f: os.path.getmtime(f)
-        for f in glob.glob(os.path.join(pasta, f"*{extensao}"))
-    }
+def baixar_arquivo(acao, pasta, nome, extensao=".pdf", timeout=30, intervalo=0.5):
+    """Executa `acao` (o clique que dispara o download) e devolve o arquivo baixado, renomeado.
 
-    fim = time.time() + timeout
-    while time.time() < fim:
-        arquivos_agora = set(glob.glob(os.path.join(pasta, f"*{extensao}")))
-        crdownloads = glob.glob(os.path.join(pasta, "*.crdownload"))
+    O snapshot da pasta é tirado antes da ação, para que um download rápido seja detectado.
+    O arquivo final nunca sobrescreve outro: em colisão, recebe o sufixo ' (2)'.
+    """
+    pasta = Path(pasta)
+    antes = {f.name for f in pasta.glob(f"*{extensao}")}
 
-        novos = arquivos_agora - set(arquivos_antes.keys())
-        modificados = {
-            f for f in arquivos_agora
-            if f in arquivos_antes and os.path.getmtime(f) != arquivos_antes[f]
-        }
+    acao()
 
-        detectados = novos | modificados
-
-        if detectados and not crdownloads:
-            arquivo = list(detectados)[0]
-            if nome_arquivo:
-                ext = os.path.splitext(arquivo)[1]
-                nome_final = nome_arquivo if os.path.splitext(nome_arquivo)[1] else nome_arquivo + ext
-                novo_caminho = os.path.join(pasta, nome_final)
-                os.rename(arquivo, novo_caminho)
-                return novo_caminho
-            return arquivo
-
-        time.sleep(0.5)
+    fim = time.monotonic() + timeout
+    while time.monotonic() < fim:
+        novos = [f for f in pasta.glob(f"*{extensao}") if f.name not in antes]
+        if novos and not list(pasta.glob("*.crdownload")):
+            destino = caminho_livre(pasta, nome)
+            novos[0].rename(destino)
+            return destino
+        time.sleep(intervalo)
 
     raise TimeoutException(f"Download não concluído após {timeout}s")

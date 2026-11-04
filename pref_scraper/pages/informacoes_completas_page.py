@@ -1,41 +1,30 @@
 from selenium.webdriver.common.by import By
 
 from pref_scraper.config.selectors import ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL, XPATH_DIV_VOLTAR_INICIO
+from pref_scraper.models import DadosImovel
 from pref_scraper.utils.campos import valor_do_campo
-from pref_scraper.utils.waits import esperar_elemento_visivel, esperar_elemento_clicavel, esperar_download_completo
+from pref_scraper.utils.waits import baixar_arquivo, esperar_elemento_clicavel, esperar_elemento_visivel
+
 
 class InformacoesCompletasPage:
     def __init__(self, driver):
         self.driver = driver
-        self.nome_proprietario = ""
-        self.doc_proprietario = ""
-        self.nome_bairro = ""
-        self.quadra = ""
-        self.lote = ""
-        self.logradouro = ""
-        self.numero = ""
-        self.complemento = ""
-        self.obter_dados_completos()
+        self.dados = self.obter_dados_completos()
 
-    def obter_dados_completos(self):
-        self.nome_proprietario = valor_do_campo(self.driver, "Proprietário")
-        self.doc_proprietario = valor_do_campo(self.driver, "CPF")
-        self.nome_bairro = valor_do_campo(self.driver, "Bairro")
-        self.quadra = valor_do_campo(self.driver, "Quadra")
-        self.lote = valor_do_campo(self.driver, "Lote")
-        self.logradouro = valor_do_campo(self.driver, "Logradouro")
-        self.numero = valor_do_campo(self.driver, "Número")
-        self.complemento = valor_do_campo(self.driver, "Complemento")
-        self.driver.dados_imovel = {
-            "bairro": self.nome_bairro,
-            "quadra": self.quadra.lstrip("0"),
-            "lote": self.lote.lstrip("0"),
-            "logradouro": self.logradouro,
-            "numero": self.numero.lstrip("0"),
-            "complemento": self.complemento,
-            "nome_proprietario": self.nome_proprietario,
-            "doc_proprietario": self.doc_proprietario
-        }
+    def obter_dados_completos(self) -> DadosImovel:
+        lido = lambda rotulo: valor_do_campo(self.driver, rotulo)  # noqa: E731
+        dados = DadosImovel(
+            bairro=lido("Bairro"),
+            quadra=lido("Quadra").lstrip("0"),
+            lote=lido("Lote").lstrip("0"),
+            logradouro=lido("Logradouro"),
+            numero=lido("Número").lstrip("0"),
+            complemento=lido("Complemento"),
+            nome_proprietario=lido("Proprietário"),
+            doc_proprietario=lido("CPF"),
+        )
+        self.driver.dados_imovel = dados
+        return dados
 
     def voltar_para_inscricao_home_page(self):
         from pref_scraper.pages.inscricao_home_page import InscricaoHomePage
@@ -43,9 +32,13 @@ class InformacoesCompletasPage:
         return InscricaoHomePage(self.driver)
 
     def pdf_ficha_cadastral_lotes(self):
-        esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL).click()
-        return esperar_download_completo(self.driver.pasta_download, nome_arquivo=f"Ficha Cadastral - {self.nome_bairro} ({self.quadra.lstrip('0')}_{self.lote.lstrip('0')}).pdf")
+        d = self.dados
+        botao = esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL)
+        nome = f"Ficha Cadastral - {d.bairro} ({d.quadra}_{d.lote}).pdf"
+        return baixar_arquivo(botao.click, self.driver.pasta_download, nome)
 
     def pdf_ficha_cadastral_residencial(self):
-        esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL).click()
-        return esperar_download_completo(self.driver.pasta_download, nome_arquivo=f"Ficha Cadastral - {self.nome_bairro} ({self.logradouro}_{self.numero.lstrip('0')}) {self.complemento}.pdf")
+        d = self.dados
+        botao = esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL)
+        nome = f"Ficha Cadastral - {d.bairro} ({d.logradouro}_{d.numero}) {d.complemento}.pdf"
+        return baixar_arquivo(botao.click, self.driver.pasta_download, nome)

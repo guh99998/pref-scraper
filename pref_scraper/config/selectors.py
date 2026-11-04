@@ -20,23 +20,22 @@ XPATH_PAGINA_EMITIR_CARNE_IPTU = "//a[starts-with(@id, 'formImobiliario:repeat:5
 
 XPATH_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO = "//a[starts-with(@id, 'formImobiliario:repeat:6:')]"
 
-XPATH_MENSAGEM_ENTRADA_TELA_DEBITOS = "/html/body/div[9]/div/div[3]/form/div[2]/div/div"
+# Tela de débitos: marcadores semânticos (não dependem dos IDs j_idtNNN, que mudam a cada implantação)
+XPATH_MENSAGEM_SEM_DEBITOS = (
+    "//div[@id='formDebitos:formMessages']"
+    "//span[contains(@class, 'ui-messages-info-detail')][contains(., 'não possui débitos')]"
+)
 
-ID_TABELA_DEBITOS_EM_ABERTO = "formDebitos:tabViewDebitos:j_idt803"
+XPATH_LINHAS_DEBITOS = "//tbody[@id='formDebitos:tabViewDebitos:dataTableDados_data']/tr[@data-ri]"
 
-ID_COLUNA_VENCIMENTO_TABELA_DEBITOS_EM_ABERTO = "formDebitos:tabViewDebitos:dataTableDados:j_idt812"
-
-ID_COLUNA_VALOR_TOTAL_TABELA_DEBITOS_EM_ABERTO = "formDebitos:tabViewDebitos:dataTableDados:j_idt819"
-
-ID_ITEMS_TABELA_DE_DEBITOS = "formDebitos:tabViewDebitos:dataTableDados_data"
+XPATH_CABECALHO_VENCIMENTO = (
+    "//thead[@id='formDebitos:tabViewDebitos:dataTableDados_head']"
+    "//th[.//span[@class='ui-column-title'][normalize-space()='Venc']]"
+)
 
 ID_BOTAO_IMPRIMIR_TODOS_DEBITOS = "formDebitos:tabViewDebitos:j_idt868"
 
 ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL = "formInformacoesCompletas:j_idt649"
-
-CLASSE_COR_AZUL_SEM_DEBITOS_PAGINA_DEBITOS = "ui-state-default ui-corner-all"
-
-ID_PRIMEIRO_VENCIMENTO_PARCELAS_DEBITOS = "formDebitos:tabViewDebitos:dataTableDados:j_idt812"
 
 ID_CAMPO_CABECALHO_PROPRIETARIO = "formCabecalho:textProprietarioNome"
 

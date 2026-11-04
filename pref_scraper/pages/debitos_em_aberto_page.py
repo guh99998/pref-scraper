@@ -1,80 +1,69 @@
-from pref_scraper.config.selectors import ID_TABELA_DEBITOS_EM_ABERTO, ID_COLUNA_VENCIMENTO_TABELA_DEBITOS_EM_ABERTO, \
-    XPATH_MENSAGEM_ENTRADA_TELA_DEBITOS, ID_ITEMS_TABELA_DE_DEBITOS, ID_COLUNA_VALOR_TOTAL_TABELA_DEBITOS_EM_ABERTO, \
-    ID_BOTAO_IMPRIMIR_TODOS_DEBITOS
-from selenium.webdriver.support.relative_locator import locate_with
+from datetime import date
+from enum import Enum
+
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-from pref_scraper.utils.waits import esperar_elemento_visivel, esperar_download_completo
-import datetime
+from selenium.webdriver.support.ui import WebDriverWait
+
+from pref_scraper.arquivos import nome_documento
+from pref_scraper.config.selectors import (
+    ID_BOTAO_IMPRIMIR_TODOS_DEBITOS,
+    XPATH_CABECALHO_VENCIMENTO,
+    XPATH_LINHAS_DEBITOS,
+    XPATH_MENSAGEM_SEM_DEBITOS,
+)
+from pref_scraper.debitos import ha_debito_vencido
+from pref_scraper.utils.waits import baixar_arquivo, esperar_elemento_visivel
+
+
+class SituacaoDebitos(Enum):
+    COM_DEBITOS = "com_debitos"
+    SEM_DEBITOS = "sem_debitos"
+
+
+class EstadoDesconhecidoError(RuntimeError):
+    """A tela de débitos não é nem a tabela de débitos nem a mensagem de 'sem débitos'."""
+
 
 class DebitosEmAbertoPage:
-    def __init__(self, driver):
+    def __init__(self, driver, timeout=10):
         self.driver = driver
+        self.timeout = timeout
 
-    def _verificar_se_existe_tabela(self):
-        esperar_elemento_visivel(self.driver, By.XPATH, XPATH_MENSAGEM_ENTRADA_TELA_DEBITOS)
-        if ID_TABELA_DEBITOS_EM_ABERTO in self.driver.page_source:
-            return True
-        return False
+    def _estado(self, driver):
+        tem_tabela = bool(driver.find_elements(By.XPATH, XPATH_LINHAS_DEBITOS))
+        tem_mensagem = bool(driver.find_elements(By.XPATH, XPATH_MENSAGEM_SEM_DEBITOS))
+        if tem_tabela and not tem_mensagem:
+            return SituacaoDebitos.COM_DEBITOS
+        if tem_mensagem and not tem_tabela:
+            return SituacaoDebitos.SEM_DEBITOS
+        return False  # nada reconhecido (ou ambíguo): continua esperando
 
-    def _verifica_vencimento_atrasado(self):
-        esperar_elemento_visivel(self.driver, By.ID, ID_TABELA_DEBITOS_EM_ABERTO)
-        data_primeiro_vencimento_value = self.driver.find_element(locate_with(By.TAG_NAME, "td").below(self.driver.find_element(By.ID, ID_COLUNA_VENCIMENTO_TABELA_DEBITOS_EM_ABERTO))).text
+    def situacao(self) -> SituacaoDebitos:
+        """COM_DEBITOS, SEM_DEBITOS ou erro. Estado desconhecido nunca vira 'sem débitos'."""
+        try:
+            return WebDriverWait(self.driver, self.timeout).until(self._estado)
+        except TimeoutException as e:
+            raise EstadoDesconhecidoError(
+                "Não foi possível identificar a situação de débitos na tela do portal "
+                "(nem a tabela de débitos nem a mensagem de 'sem débitos' foram reconhecidas). "
+                "O portal pode ter sido alterado."
+            ) from e
 
-        data_array_mode = data_primeiro_vencimento_value.split("/")
-
-        data_formated = datetime.date(int(data_array_mode[2]), int(data_array_mode[1]), int(data_array_mode[0]))
-
-        data_atual = datetime.date.today()
-        if data_formated < data_atual:
-            return True
-        return False
-
-    def _existe_debitos_em_aberto(self):
-        if self._verificar_se_existe_tabela() and self._verifica_vencimento_atrasado():
-            return True
-        return False
-
-    def obter_primeiros_debitos(self):
-        if not self._existe_debitos_em_aberto():
+    def vencimentos(self) -> list[str]:
+        if self.situacao() is SituacaoDebitos.SEM_DEBITOS:
             return []
+        cabecalho = self.driver.find_element(By.XPATH, XPATH_CABECALHO_VENCIMENTO)
+        coluna = len(cabecalho.find_elements(By.XPATH, "preceding-sibling::th")) + 1
+        celulas = self.driver.find_elements(By.XPATH, f"{XPATH_LINHAS_DEBITOS}/td[{coluna}]")
+        return [c.text.strip() for c in celulas]
 
-        header_vencimento = self.driver.find_element(By.ID, ID_COLUNA_VENCIMENTO_TABELA_DEBITOS_EM_ABERTO)
-        header_valor_total = self.driver.find_element(By.ID, ID_COLUNA_VALOR_TOTAL_TABELA_DEBITOS_EM_ABERTO)
-
-        indice_coluna_valor_total = len(header_valor_total.find_elements(By.XPATH, "preceding-sibling::th"))
-        indice_coluna_vencimento = len(header_vencimento.find_elements(By.XPATH, "preceding-sibling::th"))
-
-        linhas = self.driver.find_element(By.ID, ID_ITEMS_TABELA_DE_DEBITOS).find_elements(By.TAG_NAME, "tr")
-
-        informacoes = {}
-
-        for linha in linhas:
-            celulas = linha.find_elements(By.TAG_NAME, "td")
-            if len(celulas) <= indice_coluna_valor_total:
-                continue
-            valor = celulas[indice_coluna_valor_total].text
-            texto = celulas[indice_coluna_vencimento].text.strip()
-            if texto and valor:
-                informacoes.update({texto : valor})
-
-        self._mostrar_debitos_de_iptu_mais_antigos(informacoes)
-
-    def _mostrar_debitos_de_iptu_mais_antigos(self, dicionario_informacoes):
-        print(f"{"Vencimento":<15} {"Valor Total":<10}")
-        print("-"*25)
-        for data, valor in dicionario_informacoes.items():
-            print(
-                f"{data:<15}"
-                f"{valor:<10}"
-            )
+    def existe_debito_vencido(self, hoje: date | None = None) -> bool:
+        return ha_debito_vencido(self.vencimentos(), hoje or date.today())
 
     def gerar_arquivo_pdf_debitos_em_aberto(self):
-        if not self._existe_debitos_em_aberto():
-            return "não existem débitos para serem impressos!"
-
-        imovel = self.driver.dados_imovel
-        nome_arquivo = f"{imovel['bairro']}_{imovel['quadra']}_{imovel['lote']} - debitos.pdf"
-
-        esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_TODOS_DEBITOS).click()
-
-        return esperar_download_completo(self.driver.pasta_download, nome_arquivo=nome_arquivo)
+        if self.situacao() is SituacaoDebitos.SEM_DEBITOS:
+            return None
+        botao = esperar_elemento_visivel(self.driver, By.ID, ID_BOTAO_IMPRIMIR_TODOS_DEBITOS)
+        nome = nome_documento(self.driver.dados_imovel, "debitos")
+        return baixar_arquivo(botao.click, self.driver.pasta_download, nome)
