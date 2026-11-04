@@ -1,6 +1,6 @@
 import threading
-from browser import Browser
-from pages.home_page import HomePage
+from pref_scraper.browser import Browser
+from pref_scraper.pages.home_page import HomePage
 
 class ScraperService:
     def __init__(self):
@@ -25,9 +25,9 @@ class ScraperService:
                 self._driver = Browser.criar_driver_primeiro_plano(pasta_download)
 
     def _voltar_para_inscricao(self):
-        from pages.inscricao_home_page import InscricaoHomePage
-        from config.selectors import XPATH_DIV_VOLTAR_INICIO
-        from utils.waits import esperar_elemento_clicavel
+        from pref_scraper.pages.inscricao_home_page import InscricaoHomePage
+        from pref_scraper.config.selectors import XPATH_DIV_VOLTAR_INICIO
+        from pref_scraper.utils.waits import esperar_elemento_clicavel
         from selenium.webdriver.common.by import By
         try:
             esperar_elemento_clicavel(self._driver, By.XPATH, XPATH_DIV_VOLTAR_INICIO).click()

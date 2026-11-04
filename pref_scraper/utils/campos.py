@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-from utils.waits import esperar_elemento_visivel
+from pref_scraper.utils.waits import esperar_elemento_visivel
 
 
 def valor_do_campo(driver, rotulo, ocorrencia=1):

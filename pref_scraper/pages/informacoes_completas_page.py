@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 
-from config.selectors import ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL, XPATH_DIV_VOLTAR_INICIO
-from utils.campos import valor_do_campo
-from utils.waits import esperar_elemento_visivel, esperar_elemento_clicavel, esperar_download_completo
+from pref_scraper.config.selectors import ID_BOTAO_IMPRIMIR_FICHA_CADASTRAL, XPATH_DIV_VOLTAR_INICIO
+from pref_scraper.utils.campos import valor_do_campo
+from pref_scraper.utils.waits import esperar_elemento_visivel, esperar_elemento_clicavel, esperar_download_completo
 
 class InformacoesCompletasPage:
     def __init__(self, driver):
@@ -38,7 +38,7 @@ class InformacoesCompletasPage:
         }
 
     def voltar_para_inscricao_home_page(self):
-        from pages.inscricao_home_page import InscricaoHomePage
+        from pref_scraper.pages.inscricao_home_page import InscricaoHomePage
         esperar_elemento_clicavel(self.driver, By.XPATH, XPATH_DIV_VOLTAR_INICIO).click()
         return InscricaoHomePage(self.driver)
 

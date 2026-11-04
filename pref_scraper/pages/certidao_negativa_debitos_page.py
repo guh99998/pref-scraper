@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
-from config.selectors import ID_BOTAO_CERTIDAO_NEGATIVA_DEBITOS
-from utils.waits import esperar_elemento_visivel, esperar_download_completo
+from pref_scraper.config.selectors import ID_BOTAO_CERTIDAO_NEGATIVA_DEBITOS
+from pref_scraper.utils.waits import esperar_elemento_visivel, esperar_download_completo
 
 
 class CertidaoNegativaDebitosPage:

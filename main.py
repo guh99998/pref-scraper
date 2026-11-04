@@ -1,10 +1,7 @@
-import sys
-import os
 import tempfile
 from pathlib import Path
 from typing import Optional
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "backend"))
 
 import typer
 from rich.console import Console
@@ -18,7 +15,7 @@ console = Console()
 
 
 def _get_scraper(visivel: bool):
-    from scraper_service import scraper
+    from pref_scraper.scraper_service import scraper
     scraper._headless = not visivel
     return scraper
 
@@ -32,7 +29,7 @@ def info(
     pasta_tmp = tempfile.mkdtemp()
 
     with console.status(f"[cyan]Consultando inscrição {inscricao}...[/cyan]"):
-        from scraper_service import scraper
+        from pref_scraper.scraper_service import scraper
         try:
             resultado = scraper.obter_informacoes(inscricao, pasta_tmp, headless=not visivel)
         except Exception as e:
@@ -80,7 +77,7 @@ def documentos(
     if todos:
         extrato = certidao_negativa = existencia = valor_venal = listagem_iptu = carne_iptu = True
 
-    from scraper_service import scraper
+    from pref_scraper.scraper_service import scraper
 
     docs_selecionados = []
     if extrato:
@@ -174,7 +171,7 @@ def lote(
 
     console.print(f"[cyan]{len(inscricoes)} inscrições encontradas.[/cyan]\n")
 
-    from scraper_service import scraper
+    from pref_scraper.scraper_service import scraper
 
     resultados = []
     with Progress(
@@ -273,7 +270,7 @@ def lote_documentos(
     if todos:
         extrato = certidao_negativa = existencia = valor_venal = listagem_iptu = carne_iptu = True
 
-    from scraper_service import scraper
+    from pref_scraper.scraper_service import scraper
 
     docs_selecionados = []
     if extrato:

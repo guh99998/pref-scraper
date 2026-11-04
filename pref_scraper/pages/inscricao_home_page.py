@@ -1,14 +1,14 @@
 from selenium.webdriver.common.by import By
 
-from pages.certidao_existencia_imovel_page import CertidaoDeExistenciaPage
-from pages.certidao_negativa_debitos_page import CertidaoNegativaDebitosPage
-from pages.certidao_valor_venal_page import CertidaoValorVenalPage
-from pages.consultar_movimentacoes_extrato_page import ConsultarMovimentacoesExtratoPage
-from pages.emitir_carne_iptu_page import EmitirCarneIptuPage
-from pages.informacoes_completas_page import InformacoesCompletasPage
-from utils.waits import esperar_elemento_clicavel, esperar_elemento_visivel
-from pages.debitos_em_aberto_page import DebitosEmAbertoPage
-from config.selectors import XPATH_PAGINA_DEBITOS, XPATH_PAGINA_INFORMACOES_COMPLETAS, \
+from pref_scraper.pages.certidao_existencia_imovel_page import CertidaoDeExistenciaPage
+from pref_scraper.pages.certidao_negativa_debitos_page import CertidaoNegativaDebitosPage
+from pref_scraper.pages.certidao_valor_venal_page import CertidaoValorVenalPage
+from pref_scraper.pages.consultar_movimentacoes_extrato_page import ConsultarMovimentacoesExtratoPage
+from pref_scraper.pages.emitir_carne_iptu_page import EmitirCarneIptuPage
+from pref_scraper.pages.informacoes_completas_page import InformacoesCompletasPage
+from pref_scraper.utils.waits import esperar_elemento_clicavel, esperar_elemento_visivel
+from pref_scraper.pages.debitos_em_aberto_page import DebitosEmAbertoPage
+from pref_scraper.config.selectors import XPATH_PAGINA_DEBITOS, XPATH_PAGINA_INFORMACOES_COMPLETAS, \
     ID_FORMULARIO_PAGINA_INFORMACOES_COMPLETAS, ID_CAMPO_CABECALHO_CPF_CNPJ, ID_BOTAO_VALIDAR_DADOS, \
     XPATH_PAGINA_CERTIDAO_NEGATIVA_DEBITOS, XPATH_PAGINA_CERTIDAO_EXISTENCIA_IMOVEL, XPATH_PAGINA_CERTIDAO_VALOR_VENAL_IMOVEL, \
     XPATH_PAGINA_EMITIR_CARNE_IPTU, XPATH_PAGINA_CONSULTAR_MOVIMENTACOES_EXTRATO
